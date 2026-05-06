@@ -1,3 +1,65 @@
+mysum.m
+
+function S = mysum(x)
+% mysum вычисляет сумму S = sum_{k=1}^{10} e^k / x^k
+k = 1:10;
+S = sum(exp(k) ./ (x.^k));
+end
+
+
+mycos.m
+
+function y = mycos(x)
+% mycos - вычисление cos(x) через ряд Тейлора
+y = zeros(size(x));
+for i = 1:length(x)
+    xi = x(i);
+    term = 1;
+    sum_val = term;
+    k = 1;
+    while abs(term) > 1e-10 && k <= 100
+        term = (-1)^k * xi^(2*k) / factorial(2*k);
+        sum_val = sum_val + term;
+        k = k + 1;
+    end
+    y(i) = sum_val;
+end
+end
+
+
+
+myexp.m
+
+
+function y = myexp(x)
+% myexp - вычисление exp(x) через ряд Тейлора
+y = zeros(size(x));
+for i = 1:length(x)
+    xi = x(i);
+    term = 1;
+    sum_val = term;
+    k = 1;
+    while abs(term) > 1e-10 && k <= 100
+        term = xi^k / factorial(k);
+        sum_val = sum_val + term;
+        k = k + 1;
+    end
+    y(i) = sum_val;
+end
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
 %% Лабораторная работа 5
 
 %% ЗАДАНИЕ 1

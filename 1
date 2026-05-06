@@ -1,0 +1,119 @@
+%% Лабораторная работа 5
+
+%% ЗАДАНИЕ 1
+% Предварительно создайте файл myfun.m:
+% function y = myfun(x)
+% y = exp(-x/4).*sin(2.5*x) + sqrt(x).*cos(pi*x) + x.^3.*exp(-x/2);
+% end
+
+x1 = [0.2, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0];
+y1 = myfun(x1);
+disp('=== ЗАДАНИЕ 1 ===');
+disp('Значения myfun:'); disp([x1' y1']);
+
+figure(1);
+fplot(@myfun, [0,4], 'b-', 'LineWidth',1.5); hold on;
+plot(x1, y1, 'ro', 'MarkerSize',8, 'MarkerFaceColor','r'); hold off;
+grid on; xlabel('x'); title('myfun(x)'); legend('fplot','plot','Location','best');
+
+%% ЗАДАНИЕ 2
+f2 = @(x) 4*sin(x) + x.^2.*cos(x);
+x2 = linspace(-10,10,2000);
+figure(2);
+plot(x2, f2(x2), 'b-', [-10,10], [0,0], 'k--', 'LineWidth',1.5);
+grid on; xlabel('x'); title('4sin(x) + x^2 cos(x)'); legend('f(x)','y=0');
+
+roots2 = [];
+for a = -10:0.2:9.8
+    b = a+0.2;
+    if f2(a)*f2(b) <= 0
+        r = fzero(f2, [a,b]);
+        if isempty(roots2) || all(abs(roots2-r) > 1e-8)
+            roots2 = [roots2, r];
+        end
+    end
+end
+roots2 = sort(roots2);
+disp('=== ЗАДАНИЕ 2 ===');
+disp(['Найдено корней: ', num2str(length(roots2))]);
+disp(roots2');
+
+hold on; plot(roots2, zeros(size(roots2)), 'ro', 'MarkerSize',6); hold off;
+
+%% ЗАДАНИЕ 3
+coeff = [1, 1.8, 0, 0.2, 0, 3.5, 0, -1, -8];
+r3 = roots(coeff);
+disp('=== ЗАДАНИЕ 3 ===');
+disp('Все корни полинома (комплексные):');
+for i = 1:length(r3)
+    fprintf('x%d = %.6f %+.6fi\n', i, real(r3(i)), imag(r3(i)));
+end
+
+real_r3 = real(r3(abs(imag(r3)) < 1e-10));
+if ~isempty(real_r3)
+    disp('Вещественные корни:'); disp(real_r3);
+    
+    % Построение графика полинома
+    x_range = [min(real_r3)-1, max(real_r3)+1];
+    xp = linspace(x_range(1), x_range(2), 500);
+    figure(3);
+    plot(xp, polyval(coeff, xp), 'b-', 'LineWidth',1.5); hold on;
+    plot(x_range, [0,0], 'k--', real_r3, zeros(size(real_r3)), 'ro', 'MarkerFaceColor','r');
+    hold off; grid on; xlabel('x'); title('Полином и его вещественные корни');
+end
+
+///
+Undefined function 'myfun' for input arguments of type 'double'
+
+
+
+
+
+
+
+
+
+
+
+
+%% Лабораторная работа 6
+%% ЗАДАНИЕ 1
+disp('=== ЗАДАНИЕ 1 ===');
+x_vals = [0.5, 1, 1.5, 2, 2.5, 3];
+for x = x_vals
+    fprintf('S(%.1f) = %.6f\n', x, mysum(x));
+end
+
+%% ЗАДАНИЕ 2
+disp('=== ЗАДАНИЕ 2 ===');
+n = 5;
+Z = zeros(n, n);
+for x = 2:n+1
+    for y = 1:n
+        if x == y
+            Z(x-1, y) = NaN;
+        else
+            Z(x-1, y) = (x + y - 1) / (x - y);
+        end
+    end
+end
+disp('Z(x,y) для x=2..6, y=1..5:');
+disp(Z);
+
+%% ЗАДАНИЕ 3
+disp('=== ЗАДАНИЕ 3 ===');
+x_cos = linspace(-pi, pi, 100);
+figure(3);
+plot(x_cos, mycos(x_cos), 'b-', x_cos, cos(x_cos), 'r--', 'LineWidth',1.5);
+grid on; legend('mycos','cos'); title('Сравнение cos');
+
+x_exp = linspace(-2*pi, 2*pi, 100);
+figure(4);
+plot(x_exp, myexp(x_exp), 'b-', x_exp, exp(x_exp), 'r--', 'LineWidth',1.5);
+grid on; legend('myexp','exp'); title('Сравнение exp');
+
+
+///Undefined function 'mysum' for input arguments of type 'double'
+
+
+

@@ -51,7 +51,55 @@ end
 
 
 
+--
 
+% Создание mysum.m
+fid = fopen('mysum.m', 'w');
+fprintf(fid, 'function S = mysum(x)\n');
+fprintf(fid, 'k = 1:10;\n');
+fprintf(fid, 'S = sum(exp(k) ./ (x.^k));\n');
+fprintf(fid, 'end\n');
+fclose(fid);
+
+% Создание mycos.m
+fid = fopen('mycos.m', 'w');
+fprintf(fid, 'function y = mycos(x)\n');
+fprintf(fid, 'y = zeros(size(x));\n');
+fprintf(fid, 'for i = 1:length(x)\n');
+fprintf(fid, '    xi = x(i);\n');
+fprintf(fid, '    term = 1;\n');
+fprintf(fid, '    sum_val = term;\n');
+fprintf(fid, '    k = 1;\n');
+fprintf(fid, '    while abs(term) > 1e-10 && k <= 100\n');
+fprintf(fid, '        term = (-1)^k * xi^(2*k) / factorial(2*k);\n');
+fprintf(fid, '        sum_val = sum_val + term;\n');
+fprintf(fid, '        k = k + 1;\n');
+fprintf(fid, '    end\n');
+fprintf(fid, '    y(i) = sum_val;\n');
+fprintf(fid, 'end\n');
+fprintf(fid, 'end\n');
+fclose(fid);
+
+% Создание myexp.m
+fid = fopen('myexp.m', 'w');
+fprintf(fid, 'function y = myexp(x)\n');
+fprintf(fid, 'y = zeros(size(x));\n');
+fprintf(fid, 'for i = 1:length(x)\n');
+fprintf(fid, '    xi = x(i);\n');
+fprintf(fid, '    term = 1;\n');
+fprintf(fid, '    sum_val = term;\n');
+fprintf(fid, '    k = 1;\n');
+fprintf(fid, '    while abs(term) > 1e-10 && k <= 100\n');
+fprintf(fid, '        term = xi^k / factorial(k);\n');
+fprintf(fid, '        sum_val = sum_val + term;\n');
+fprintf(fid, '        k = k + 1;\n');
+fprintf(fid, '    end\n');
+fprintf(fid, '    y(i) = sum_val;\n');
+fprintf(fid, 'end\n');
+fprintf(fid, 'end\n');
+fclose(fid);
+
+disp('Файлы успешно созданы!');
 
 
 
